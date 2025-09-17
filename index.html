@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rotating Image with Loading</title>
+  <title>Rotating Image with Floating Loading</title>
   <style>
     body {
       margin: 0;
@@ -12,13 +12,19 @@
       background: #fff;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
     }
 
-    /* 图片旋转 */
+    /* 图片旋转并放在 2/5 高度 */
+    .image-container {
+      margin-top: 40vh; /* 大约在 2/5 高度 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     img {
-      width: 60%; /* 图片宽度改为 60% */
+      width: 60%;
       height: auto;
       animation: spin 10s linear infinite;
     }
@@ -27,19 +33,33 @@
       to   { transform: rotate(360deg); }
     }
 
-    /* Loading... 文字 */
+    /* Loading 文字逐个浮动 */
     .loading {
-      margin-top: 20px; /* 图片下方 20px */
+      margin-top: 40px;
       font-family: sans-serif;
-      font-size: 20px;
+      font-size: 28px; /* 字体更大 */
       font-weight: bold;
-      color: rgba(150, 150, 150, 0.6); /* 浅灰半透明 */
-      animation: waveText 1.5s infinite ease-in-out;
+      color: rgba(150, 150, 150, 0.7);
+      user-select: none;
     }
+    .loading span {
+      display: inline-block;
+      animation: float 1.5s infinite ease-in-out;
+    }
+    .loading span:nth-child(1) { animation-delay: 0s; }
+    .loading span:nth-child(2) { animation-delay: 0.1s; }
+    .loading span:nth-child(3) { animation-delay: 0.2s; }
+    .loading span:nth-child(4) { animation-delay: 0.3s; }
+    .loading span:nth-child(5) { animation-delay: 0.4s; }
+    .loading span:nth-child(6) { animation-delay: 0.5s; }
+    .loading span:nth-child(7) { animation-delay: 0.6s; }
+    .loading span:nth-child(8) { animation-delay: 0.7s; }
+    .loading span:nth-child(9) { animation-delay: 0.8s; }
+    .loading span:nth-child(10){ animation-delay: 0.9s; }
 
-    @keyframes waveText {
+    @keyframes float {
       0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-6px); }
+      50%      { transform: translateY(-12px); }
     }
 
     /* 底部横条 */
@@ -52,7 +72,7 @@
       color: white;
       text-align: center;
       font-family: monospace;
-      font-size: 12px;  /* 改成 12px */
+      font-size: 12px;
       font-weight: normal;
       padding: 6px 0;
       z-index: 10;
@@ -61,11 +81,16 @@
   </style>
 </head>
 <body>
-  <!-- 居中旋转的图片 -->
-  <img src="Kappa.jpg" alt="Rotating Image">
+  <div class="image-container">
+    <!-- 旋转的图片 -->
+    <img src="Kappa.jpg" alt="Rotating Image">
 
-  <!-- Loading 文字 -->
-  <div class="loading">loading...</div>
+    <!-- Loading... 逐字浮动 -->
+    <div class="loading">
+      <span>L</span><span>o</span><span>a</span><span>d</span>
+      <span>i</span><span>n</span><span>g</span><span>.</span><span>.</span><span>.</span>
+    </div>
+  </div>
 
   <!-- 底部横条 -->
   <div class="footer">© 2025 Taki. All rights reserved.</div>
