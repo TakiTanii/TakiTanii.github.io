@@ -7,7 +7,7 @@
   <style>
     body {
       margin: 0;
-      overflow: hidden; /* 防止滚动条 */
+      overflow: hidden;
       height: 100vh;
       width: 100vw;
       background: #fff;
@@ -18,18 +18,30 @@
       width: 25%; /* 缩放到 25% */
       height: auto;
     }
-    .loading {
+    .loading-container {
       position: fixed;
-      bottom: 40px;            /* 紧贴横条上方 */
+      bottom: 40px; /* 紧贴横条上方 */
       left: 0;
       width: 100%;
-      text-align: center;
-      font-family: monospace;
-      font-size: 48px;         /* 加大字号 */
-      font-weight: bold;       /* 加粗 */
-      color: #666;             /* 深灰色，显眼一些 */
+      height: 30px;
+      overflow: hidden; /* 超出部分隐藏 */
       z-index: 5;
-      user-select: none;
+    }
+    .loading {
+      position: absolute;
+      left: -100%; /* 从左边外面开始 */
+      width: 100%;
+      text-align: center;
+      font-family: sans-serif;
+      font-size: 20px; /* 恢复原始大小 */
+      font-weight: bold;
+      color: #666;
+      animation: scrollLoading 4s linear infinite;
+    }
+    @keyframes scrollLoading {
+      0%   { left: -100%; }
+      50%  { left: 0; }
+      100% { left: 100%; }
     }
     .footer {
       position: fixed;
@@ -37,11 +49,11 @@
       left: 0;
       width: 100%;
       background-color: #5D9C4D; /* 青绿色背景 */
-      color: white;              /* 白色字体 */
+      color: white;
       text-align: center;
       font-family: monospace;
       font-size: 18px;
-      font-weight: normal;       /* 不加粗 */
+      font-weight: normal;
       padding: 8px 0;
       z-index: 10;
       user-select: none;
@@ -51,40 +63,49 @@
 <body>
   <img id="ball" src="Kappa.jpg" alt="Bouncing Image">
 
-  <!-- 加粗灰色 Loading -->
-  <div class="loading">loading...</div>
+  <!-- 加粗灰色 Loading 滚动效果 -->
+  <div class="loading-container">
+    <div class="loading">loading...</div>
+  </div>
 
   <!-- 底部青色横条 -->
   <div class="footer">© 2025 Taki. All rights reserved.</div>
 
   <script>
     const img = document.getElementById('ball');
+    const footer = document.querySelector('.footer');
     let x = 100, y = 100; // 初始位置
     let dx = 3, dy = 3;   // 移动速度
 
     function animate() {
       const w = window.innerWidth;
       const h = window.innerHeight;
-
-      const footer = document.querySelector('.footer');
-      const footerHeight = footer.offsetHeight;
-
       const iw = img.offsetWidth;
       const ih = img.offsetHeight;
+
+      const bottomLimit = footer.offsetTop; // 底部边界
 
       x += dx;
       y += dy;
 
       // 左右反弹
-      if (x <= 0 || x + iw >= w) dx *= -1;
+      if (x <= 0) {
+        x = 0;
+        dx *= -1;
+      } else if (x + iw >= w) {
+        x = w - iw;
+        dx *= -1;
+      }
 
       // 上反弹
-      if (y <= 0) dy *= -1;
+      if (y <= 0) {
+        y = 0;
+        dy *= -1;
+      }
 
-      // 下反弹：以 footer 顶部为边界
-      const bottomLimit = h - footerHeight;
+      // 下反弹：严格碰到 footer 顶部
       if (y + ih >= bottomLimit) {
-        y = bottomLimit - ih; // 精确贴住横条上边界
+        y = bottomLimit - ih;
         dy *= -1;
       }
 
