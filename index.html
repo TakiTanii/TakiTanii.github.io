@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rotating Image with Wave Loading</title>
+  <title>Rotating Image with Loading</title>
   <style>
     body {
       margin: 0;
@@ -18,7 +18,7 @@
 
     /* 图片旋转 */
     img {
-      width: 25%;
+      width: 60%; /* 图片宽度改为 60% */
       height: auto;
       animation: spin 10s linear infinite;
     }
@@ -27,28 +27,19 @@
       to   { transform: rotate(360deg); }
     }
 
-    /* 波浪 Loading */
-    .wave-loading {
+    /* Loading... 文字 */
+    .loading {
       margin-top: 20px; /* 图片下方 20px */
-      display: flex;
-      gap: 8px;
+      font-family: sans-serif;
+      font-size: 20px;
+      font-weight: bold;
+      color: rgba(150, 150, 150, 0.6); /* 浅灰半透明 */
+      animation: waveText 1.5s infinite ease-in-out;
     }
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background-color: rgba(150, 150, 150, 0.7); /* 浅灰半透明 */
-      animation: wave 1.2s infinite ease-in-out;
-    }
-    .dot:nth-child(1) { animation-delay: 0s; }
-    .dot:nth-child(2) { animation-delay: 0.2s; }
-    .dot:nth-child(3) { animation-delay: 0.4s; }
-    .dot:nth-child(4) { animation-delay: 0.6s; }
-    .dot:nth-child(5) { animation-delay: 0.8s; }
 
-    @keyframes wave {
+    @keyframes waveText {
       0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-10px); }
+      50%      { transform: translateY(-6px); }
     }
 
     /* 底部横条 */
@@ -61,9 +52,9 @@
       color: white;
       text-align: center;
       font-family: monospace;
-      font-size: 18px;
+      font-size: 12px;  /* 改成 12px */
       font-weight: normal;
-      padding: 8px 0;
+      padding: 6px 0;
       z-index: 10;
       user-select: none;
     }
@@ -73,14 +64,8 @@
   <!-- 居中旋转的图片 -->
   <img src="Kappa.jpg" alt="Rotating Image">
 
-  <!-- 波浪 Loading 动画 -->
-  <div class="wave-loading">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-  </div>
+  <!-- Loading 文字 -->
+  <div class="loading">loading...</div>
 
   <!-- 底部横条 -->
   <div class="footer">© 2025 Taki. All rights reserved.</div>
