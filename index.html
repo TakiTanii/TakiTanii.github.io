@@ -10,7 +10,7 @@
       overflow: hidden; /* 防止滚动条 */
       height: 100vh;
       width: 100vw;
-      background: #fff; /* 白色背景 */
+      background: #fff;
       position: relative;
     }
     img {
@@ -18,19 +18,32 @@
       width: 25%; /* 缩放到 25% */
       height: auto;
     }
+    .loading {
+      position: fixed;
+      bottom: 30px;            /* 在横条上方留出空间 */
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-family: monospace;
+      font-size: 20px;
+      font-weight: bold;       /* 加粗 */
+      color: #888;             /* 灰色文字 */
+      z-index: 5;
+      user-select: none;
+    }
     .footer {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      background-color: teal; /* 青色背景 */
-      color: white;           /* 白色字体 */
+      background-color: #5D9C4D; /* 青绿色背景 */
+      color: white;              /* 白色字体 */
       text-align: center;
       font-family: monospace;
       font-size: 16px;
-      font-weight: bold;
-      padding: 6px 0;         /* 上下留空 */
-      z-index: 10;            /* 确保在最上层 */
+      font-weight: normal;       /* 不加粗 */
+      padding: 6px 0;
+      z-index: 10;
       user-select: none;
     }
   </style>
@@ -38,7 +51,10 @@
 <body>
   <img id="ball" src="Kappa.jpg" alt="Bouncing Image">
 
-  <!-- 页脚 -->
+  <!-- 加粗灰色 Loading -->
+  <div class="loading">loading...</div>
+
+  <!-- 底部青色横条 -->
   <div class="footer">© 2025 Taki. All rights reserved.</div>
 
   <script>
@@ -49,6 +65,13 @@
     function animate() {
       const w = window.innerWidth;
       const h = window.innerHeight;
+
+      const footer = document.querySelector('.footer');
+      const footerHeight = footer.offsetHeight;
+
+      const loading = document.querySelector('.loading');
+      const loadingHeight = loading.offsetHeight;
+
       const iw = img.offsetWidth;
       const ih = img.offsetHeight;
 
@@ -57,7 +80,16 @@
 
       // 边界检测 + 反弹
       if (x <= 0 || x + iw >= w) dx *= -1;
-      if (y <= 0 || y + ih >= h) dy *= -1;
+
+      // 上边界
+      if (y <= 0) dy *= -1;
+
+      // 下边界：以 loading 的上边界作为反弹参考
+      const bottomLimit = h - footerHeight - loadingHeight - 10; // 10px 缓冲
+      if (y + ih >= bottomLimit) {
+        y = bottomLimit - ih; // 调整位置，避免穿透
+        dy *= -1;
+      }
 
       img.style.left = x + 'px';
       img.style.top = y + 'px';
