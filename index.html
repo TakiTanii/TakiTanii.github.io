@@ -18,20 +18,28 @@
       width: 25%; /* 缩放到 25% */
       height: auto;
     }
-    .loading {
+    .footer {
       position: fixed;
-      bottom: 10px;
-      right: 10px;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: teal; /* 青色背景 */
+      color: white;           /* 白色字体 */
+      text-align: center;
       font-family: monospace;
-      font-size: 20px;
-      color: black;
-      z-index: 9999; /* 保证最上层 */
+      font-size: 16px;
+      font-weight: bold;
+      padding: 6px 0;         /* 上下留空 */
+      z-index: 10;            /* 确保在最上层 */
+      user-select: none;
     }
   </style>
 </head>
 <body>
   <img id="ball" src="Kappa.jpg" alt="Bouncing Image">
-  <div class="loading">loading...</div>
+
+  <!-- 页脚 -->
+  <div class="footer">© 2025 Taki. All rights reserved.</div>
 
   <script>
     const img = document.getElementById('ball');
