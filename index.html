@@ -26,7 +26,7 @@
       text-align: center;
       z-index: 5;
       font-family: sans-serif;
-      font-size: 20px;
+      font-size: 40px;
       font-weight: bold;
       color: #666;
       user-select: none;
@@ -60,7 +60,7 @@
       color: white;
       text-align: center;
       font-family: monospace;
-      font-size: 18px;
+      font-size: 8px;
       font-weight: normal;
       padding: 8px 0;
       z-index: 10;
@@ -74,8 +74,7 @@
   <!-- 字母逐个跳动 Loading -->
   <div class="loading-container">
     <div class="loading">
-      <span>L</span><span>o</span><span>a</span><span>d</span>
-      <span>i</span><span>n</span><span>g</span><span>.</span><span>.</span><span>.</span>
+      <span>L</span><span>o</span><span>a</span><span>d</span><span>i</span><span>n</span><span>g</span><span>.</span><span>.</span><span>.</span>
     </div>
   </div>
 
@@ -86,7 +85,7 @@
     const img = document.getElementById('ball');
     const footer = document.querySelector('.footer');
     let x = 100, y = 100; // 初始位置
-    let dx = 3, dy = 3;   // 移动速度
+    let dx = 2, dy = 2;   // 移动速度
 
     function animate() {
       const w = window.innerWidth;
