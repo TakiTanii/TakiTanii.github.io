@@ -3,24 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Loading_Page</title>
+  <title>Bouncing Image</title>
   <style>
     body {
       margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      overflow: hidden; /* 防止滚动条 */
       height: 100vh;
-      background-color: #FFF; /* 背景黑色，可改 */
+      width: 100vw;
+      background: #fff; /* 白色背景 */
+      position: relative;
     }
     img {
-      max-width: 100%;
-      max-height: 100%;
+      position: absolute;
+      width: 25%; /* 缩放到 25% */
+      height: auto;
+    }
+    .loading {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-family: monospace;
+      font-size: 20px;
+      color: black;
+      z-index: 9999; /* 保证最上层 */
     }
   </style>
 </head>
 <body>
-  <img src="Kappa.jpg" alt="Test_Image">
+  <img id="ball" src="Kappa.jpg" alt="Bouncing Image">
+  <div class="loading">loading...</div>
+
+  <script>
+    const img = document.getElementById('ball');
+    let x = 100, y = 100; // 初始位置
+    let dx = 3, dy = 3;   // 移动速度
+
+    function animate() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const iw = img.offsetWidth;
+      const ih = img.offsetHeight;
+
+      x += dx;
+      y += dy;
+
+      // 边界检测 + 反弹
+      if (x <= 0 || x + iw >= w) dx *= -1;
+      if (y <= 0 || y + ih >= h) dy *= -1;
+
+      img.style.left = x + 'px';
+      img.style.top = y + 'px';
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
 
